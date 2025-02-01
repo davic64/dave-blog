@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #09050F;
+    color: white;
+}
+
+/* Button */
+@keyframes gradientShiftIn {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes gradientShiftOut {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .gradient-animation {
+    background-size: 200% 200%;
+    @apply bg-gradient-to-r from-primary-400 to-primary-800;
+    transition: background-position 1s ease-in-out;
+  }
+  
+  .gradient-animation:hover {
+    animation: gradientShiftIn 1s ease forwards;
+  }
+  
+  .gradient-animation:not(:hover) {
+    animation: gradientShiftOut 1s ease forwards;
+  }
