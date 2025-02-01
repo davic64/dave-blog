@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Logo } from "../atoms/Logo";
 
 export const Header = ({ items }) => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -26,8 +27,7 @@ export const Header = ({ items }) => {
     >
       <div className="flex items-center justify-between h-24 px-4 py-3 max-w-7xl mx-auto">
         <Link href="/" className="flex items-center select-none text-2xl">
-          <span className="font-bold">Dave</span>
-          <span className="font-thin">, Full Stack</span>
+          <Logo />
         </Link>
 
         <nav className="flex items-center gap-8 text-xl">
