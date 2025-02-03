@@ -8,3 +8,6 @@ export * from "./atoms/Logo";
 // Molecules
 export * from "./molecules/EmptyState";
 export * from "./molecules/Header";
+
+// Organisms
+export * from "./organisms/Sidebar";

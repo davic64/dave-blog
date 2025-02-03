@@ -24,12 +24,7 @@ const Login = () => {
   return (
     <ProtectedRoute redirectToDashboard>
       <div className="flex flex-col items-center justify-center h-screen w-full gap-4 relative">
-        <div className="mb-4 relative inline-flex h-12 overflow-hidden rounded-lg p-[1px] focus:outline-none focus:ring-slate-400">
-          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-slate-950 px-6 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-            <Logo />
-          </span>
-        </div>
+        <Logo square />
         <div className="text-center">
           <h1 className="text-2xl font-bold">Inicio de sesión</h1>
           <p className="text-sm text-gray-400">
