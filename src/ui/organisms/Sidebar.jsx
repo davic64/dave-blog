@@ -23,11 +23,6 @@ const sidebarItems = [
     link: "/dashboard/posts",
   },
   {
-    icon: <IconFileDots />,
-    label: "Borradores",
-    link: "/dashboard/drafts",
-  },
-  {
     icon: <IconSettings />,
     label: "Configuración",
     link: "/dashboard/settings",

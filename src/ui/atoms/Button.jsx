@@ -1,10 +1,20 @@
 import { forwardRef } from "react";
 
+const baseStyles = "px-4 py-2 rounded-md text-white transition ease-in-out";
+const borderStyles = "border border-gray-600";
+const hoverEffects = (color) => `
+  hover:border-${color}-500 
+  hover:text-white 
+  hover:shadow-xl 
+  hover:shadow-${color}-500/40 
+  hover:bg-${color}-500/10
+`;
+
 const variants = {
-  primary:
-    "border text-gray-300 border-gray-600 text-white shadow-primary-500/50 hover:border-primary-500 hover:text-white hover:shadow-xl hover:shadow-primary-500/40 hover:bg-primary-500/10",
-  gradient:
-    "px-4 py-2 rounded-md text-white transition ease-in-out duration-300 gradient-animation",
+  primary: `${borderStyles} text-gray-300 ${hoverEffects("primary")}`,
+  gradient: `${baseStyles} duration-300 gradient-animation`,
+  danger: `${baseStyles} ${borderStyles} ${hoverEffects("red")}`,
+  warning: `${baseStyles} ${borderStyles} ${hoverEffects("yellow")}`,
 };
 
 export const Button = forwardRef(

@@ -1,5 +1,13 @@
 export class Post {
-  constructor({ title, content, date = new Date(), meta = {}, image }) {
+  constructor({
+    title,
+    content,
+    date = new Date(),
+    meta = {},
+    image,
+    status = "draft",
+  }) {
+    this.status = status || "draft";
     this._validate(title, content);
     this.title = title;
     this.content = content;
