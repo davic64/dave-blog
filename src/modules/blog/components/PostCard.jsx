@@ -1,5 +1,6 @@
 import { Card } from "@/ui";
 import dayjs from "dayjs";
+import "dayjs/locale/es";
 import Link from "next/link";
 
 export const PostCard = ({ post, main = false }) => {
@@ -14,10 +15,12 @@ export const PostCard = ({ post, main = false }) => {
         <div className="absolute bottom-0 left-0 w-full h-full bg-black/40 group hover:bg-black/60 transition-all duration-500">
           <div className="absolute bottom-14 left-14 group-hover:bottom-20 transition-all duration-500">
             <p className="text-sm text-white">
-              {dayjs(post.date).locale("es").format("D [de] MMMM [de] YYYY")}
+              {dayjs(post.date.toDate())
+                .locale("es")
+                .format("D [de] MMMM [de] YYYY")}
             </p>
             <h1 className="text-4xl font-bold text-white">{post.title}</h1>
-            <div className="flex items-center gap-4 mt-4 select-none">
+            <div className="flex items-center gap-2 mt-4 select-none">
               {post.meta.tags.map((tag) => (
                 <div
                   key={tag}
@@ -42,10 +45,12 @@ export const PostCard = ({ post, main = false }) => {
         <div className="absolute bottom-0 left-0 w-full h-full bg-black/40 group hover:bg-black/60 transition-all duration-500">
           <div className="absolute bottom-14 left-14 group-hover:bottom-20 transition-all duration-500">
             <p className="text-sm text-white">
-              {dayjs(post.date).locale("es").format("D [de] MMMM [de] YYYY")}
+              {dayjs(post.date.toDate())
+                .locale("es")
+                .format("D [de] MMMM [de] YYYY")}
             </p>
             <h1 className="text-6xl font-bold text-white">{post.title}</h1>
-            <div className="flex items-center gap-4 mt-4 select-none">
+            <div className="flex items-center gap-2 mt-4 select-none">
               {post.meta.tags.map((tag) => (
                 <div
                   key={tag}

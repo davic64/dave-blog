@@ -33,7 +33,7 @@ const sidebarBottomItems = [
   {
     icon: <IconLogout />,
     label: "Cerrar sesión",
-    onClick: (logout) => logout,
+    onClick: (logout) => logout(),
   },
 ];
 

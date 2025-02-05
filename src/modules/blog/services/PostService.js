@@ -6,9 +6,11 @@ export class PostService {
     this.postCollection = collection(db, collectionName);
   }
 
-  async getAll() {
+  async getAllPublished() {
     const posts = await getDocs(this.postCollection);
-    return posts.docs.map((doc) => doc.data());
+    return posts.docs
+      .filter((doc) => doc.data().status === "published")
+      .map((doc) => doc.data());
   }
 
   async getBySlug(slug) {

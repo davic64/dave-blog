@@ -1,5 +1,6 @@
 export class Post {
   constructor({
+    id,
     title,
     content,
     date = new Date(),
@@ -7,24 +8,25 @@ export class Post {
     image,
     status = "draft",
   }) {
-    this.status = status || "draft";
+    this.id = id;
+    this.status = status;
     this._validate(title, content);
     this.title = title;
     this.content = content;
     this.date = date;
     this.image = image;
-    this.slug = this._generateSlug();
     this.meta = {
       tags: meta.tags || [],
-      seoTitle: meta.seoTitle || title,
-      seoDescription: meta.seoDescription || this._generateSEODescription(),
+      seoTitle: this.title,
+      seoDescription: this._generateSEODescription(),
     };
+    this.slug = this._generateSlug();
   }
 
   _validate(title, content) {
     if (!title || title.length < 5) throw new Error("Título inválido");
-    // if (!content || content.length < 100)
-    //   throw new Error("Contenido demasiado corto");
+    if (!content || content.length < 100)
+      throw new Error("Contenido demasiado corto");
   }
 
   _generateSEODescription() {
@@ -36,5 +38,17 @@ export class Post {
       .toLowerCase()
       .replace(/ /g, "-")
       .replace(/[^\w-]+/g, "");
+  }
+
+  toJSON() {
+    return {
+      title: this.title,
+      content: this.content,
+      date: this.date,
+      meta: this.meta,
+      image: this.image,
+      status: this.status,
+      slug: this.slug,
+    };
   }
 }

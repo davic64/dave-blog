@@ -6,6 +6,9 @@ import remarkGfm from "remark-gfm";
 import dayjs from "dayjs";
 
 export const PostContent = ({ post }) => {
+  // Convertir el valor serializado de vuelta a una fecha
+  const postDate = new Date(post.date);
+
   const handleShare = (platform) => {
     const currentUrl = window.location.href;
 
@@ -31,7 +34,7 @@ export const PostContent = ({ post }) => {
   return (
     <div className="space-y-6">
       <PostHead
-        date={dayjs(post.date).locale("es").format("D [de] MMMM [de] YYYY")}
+        date={dayjs(postDate).locale("es").format("D [de] MMMM [de] YYYY")}
         src={post.image}
         title={post.title}
         tags={post.meta.tags}

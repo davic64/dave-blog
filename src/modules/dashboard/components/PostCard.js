@@ -1,5 +1,6 @@
 import { Button, Card } from "@/ui";
 import dayjs from "dayjs";
+import "dayjs/locale/es";
 import { IconFile, IconClock } from "@tabler/icons-react";
 const statusLabels = {
   draft: {
@@ -25,7 +26,7 @@ export const PostCard = ({ post }) => {
       <div className="absolute bottom-0 left-0 w-full h-full bg-black/40 group hover:bg-black/60 transition-all duration-500">
         <div className="absolute top-6 right-6 z-10">
           <div
-            className={`bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full text-xs flex items-center gap-1 ${
+            className={`backdrop-blur-sm px-2 py-1 rounded-full text-xs flex items-center gap-1 ${
               statusLabels[post.status].color
             }`}
           >
@@ -35,15 +36,17 @@ export const PostCard = ({ post }) => {
         </div>
         <div className="absolute bottom-14 left-10 group-hover:bottom-20 transition-all duration-500 ">
           <p className="text-sm text-white">
-            {dayjs(post.date).locale("es").format("D [de] MMMM [de] YYYY")}
+            {dayjs(post.date.toDate())
+              .locale("es")
+              .format("D [de] MMMM [de] YYYY")}
           </p>
           <p className="text-2xl font-bold text-white">{post.title}</p>
         </div>
         <div className="absolute bottom-10 left-10 opacity-0 group-hover:opacity-100 transition-all duration-500 space-x-2">
-          <Button variant="warning" className="px-4 py-0">
+          <Button variant="warning" size="sm">
             Editar
           </Button>
-          <Button variant="danger" className="px-4 py-0">
+          <Button variant="danger" size="sm">
             Eliminar
           </Button>
         </div>

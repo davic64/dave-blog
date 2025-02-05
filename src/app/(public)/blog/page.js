@@ -4,7 +4,9 @@ import { IconFileSmileFilled } from "@tabler/icons-react";
 
 export default async function BlogPage() {
   const postService = new PostService();
-  const posts = await postService.getAll();
+  const posts = await postService.getAllPublished();
+
+  // TODO: Add stores and hooks to get the posts
 
   if (posts.length === 0)
     return (

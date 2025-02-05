@@ -12,15 +12,15 @@ const ProtectedRoute = ({ children, redirectToDashboard = false }) => {
       if (redirectToDashboard && user) {
         redirect("/dashboard");
       } else if (!redirectToDashboard && !user) {
-        redirect("/login");
+        redirect("/dv-login");
       }
     }
   }, [user, loading, redirectToDashboard]);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <Spinner />
+      <div className="flex items-center justify-center h-[calc(100vh-80px)]">
+        <Spinner className="w-10 h-10" />
       </div>
     );
   }

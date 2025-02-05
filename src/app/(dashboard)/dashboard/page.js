@@ -1,8 +1,12 @@
 "use client";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { Card } from "@/ui";
+import { Card, Spinner } from "@/ui";
 import { IconEye, IconFile, IconFileDots } from "@tabler/icons-react";
 import { XAxis, YAxis, Tooltip, AreaChart, Area } from "recharts";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { useEffect } from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
 
 const data = [
   { name: "Enero", views: 100 },
@@ -19,25 +23,13 @@ const data = [
   { name: "Diciembre", views: 200 },
 ];
 
-const posts = [
-  {
-    title: "Título del Post",
-    date: "12 de Octubre, 2023",
-    views: 100,
-  },
-  {
-    title: "Título del Post",
-    date: "12 de Octubre, 2023",
-    views: 100,
-  },
-  {
-    title: "Título del Post",
-    date: "12 de Octubre, 2023",
-    views: 100,
-  },
-];
-
 export default function Dashboard() {
+  const { posts, loading, fetchOnlyFive } = useDashboardStore();
+
+  useEffect(() => {
+    fetchOnlyFive();
+  }, [fetchOnlyFive]);
+
   return (
     <ProtectedRoute>
       <div className="space-y-4">
@@ -55,14 +47,18 @@ export default function Dashboard() {
               <IconFile size={16} className="text-gray-500" />
               <p className="text-sm text-gray-500">Posts Publicados</p>
             </div>
-            <p className="text-2xl font-bold">100</p>
+            <p className="text-2xl font-bold">
+              {posts.filter((post) => post.status === "published").length}
+            </p>
           </Card>
           <Card className="p-4 space-y-2">
             <div className="flex items-center gap-2">
               <IconFileDots size={16} className="text-gray-500" />
               <p className="text-sm text-gray-500">Borradores</p>
             </div>
-            <p className="text-2xl font-bold">100</p>
+            <p className="text-2xl font-bold">
+              {posts.filter((post) => post.status === "draft").length}
+            </p>
           </Card>
         </div>
         <Card className="p-8 space-y-4">
@@ -92,28 +88,47 @@ export default function Dashboard() {
         </Card>
         <Card className="px-8 space-y-4">
           <p className="text-lg font-bold">Posts Recientes</p>
-          <div className="flex flex-col gap-4">
-            {posts.map((post, index) => (
-              <div key={index}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-24 h-16 bg-gray-200 rounded-lg">
-                      {/* Aquí va la imagen */}
+          {loading ? (
+            <div className="flex justify-center items-center py-8">
+              <Spinner />
+            </div>
+          ) : posts.length > 0 ? (
+            <div className="flex flex-col gap-4">
+              {posts.map((post, index) => (
+                <div key={post.id}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-24 h-16 bg-gray-200 rounded-lg">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-medium">{post.title}</p>
+                        <p className="text-xs text-gray-500">
+                          {dayjs(post.date.toDate())
+                            .locale("es")
+                            .format("D [de] MMMM [de] YYYY")}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">{post.title}</p>
-                      <p className="text-xs text-gray-500">{post.date}</p>
+                    <div className="flex items-center gap-2">
+                      <IconEye size={16} className="text-gray-500" />
+                      {/* Falta poner los views de las analíticas */}
+                      <p className="text-sm text-gray-500">{post.views}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <IconEye size={16} className="text-gray-500" />
-                    <p className="text-sm text-gray-500">{post.views}</p>
-                  </div>
+                  {index < posts.length - 1 && (
+                    <hr className="border-gray-800" />
+                  )}
                 </div>
-                {index < 2 && <hr className="border-gray-800" />}
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">No hay posts disponibles</p>
+          )}
         </Card>
       </div>
     </ProtectedRoute>
