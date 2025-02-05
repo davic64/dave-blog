@@ -1,7 +1,10 @@
+"use client";
 import { Button, Card } from "@/ui";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { IconFile, IconClock } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
+
 const statusLabels = {
   draft: {
     label: "Borrador",
@@ -16,6 +19,8 @@ const statusLabels = {
 };
 
 export const PostCard = ({ post }) => {
+  const router = useRouter();
+
   return (
     <Card className="w-full h-[16rem] p-0 rounded-3xl relative select-none">
       <img
@@ -43,7 +48,11 @@ export const PostCard = ({ post }) => {
           <p className="text-2xl font-bold text-white">{post.title}</p>
         </div>
         <div className="absolute bottom-10 left-10 opacity-0 group-hover:opacity-100 transition-all duration-500 space-x-2">
-          <Button variant="warning" size="sm">
+          <Button
+            variant="warning"
+            size="sm"
+            onClick={() => router.push(`/dashboard/posts/${post.slug}`)}
+          >
             Editar
           </Button>
           <Button variant="danger" size="sm">

@@ -16,4 +16,14 @@ export const useBlogStore = create((set) => ({
       set({ error, loading: false });
     }
   },
+  fetchPost: async (slug) => {
+    try {
+      set({ loading: true, error: null });
+      const postService = new PostService();
+      const post = await postService.getBySlug(slug);
+      set({ post, loading: false });
+    } catch (error) {
+      set({ error, loading: false });
+    }
+  },
 }));

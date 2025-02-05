@@ -8,9 +8,9 @@ const NewPost = () => {
   const { createPost } = useDashboardStore();
   const router = useRouter();
 
-  const handleSubmit = async (post) => {
+  const handleSubmit = async (post, file) => {
     try {
-      await createPost(post);
+      await createPost(post, file);
       toast.success("Post creado correctamente");
       router.push("/dashboard/posts");
     } catch (error) {
