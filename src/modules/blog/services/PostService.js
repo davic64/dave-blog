@@ -2,8 +2,8 @@ import { db } from "@/infrastructure/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 export class PostService {
-  constructor(collectionName = "posts") {
-    this.postCollection = collection(db, collectionName);
+  constructor() {
+    this.postCollection = collection(db, "posts");
   }
 
   async getAllPublished() {
