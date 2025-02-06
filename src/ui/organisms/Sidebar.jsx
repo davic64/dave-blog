@@ -22,11 +22,11 @@ const sidebarItems = [
     label: "Posts",
     link: "/dashboard/posts",
   },
-  {
-    icon: <IconSettings />,
-    label: "Configuración",
-    link: "/dashboard/settings",
-  },
+  // {
+  //   icon: <IconSettings />,
+  //   label: "Configuración",
+  //   link: "/dashboard/settings",
+  // },
 ];
 
 const sidebarBottomItems = [
