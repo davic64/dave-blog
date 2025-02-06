@@ -5,6 +5,8 @@ export const useBlogStore = create((set) => ({
   posts: [],
   loading: false,
   error: null,
+  post: null,
+  totalViews: 0,
 
   fetchPosts: async () => {
     try {
@@ -25,5 +27,18 @@ export const useBlogStore = create((set) => ({
     } catch (error) {
       set({ error, loading: false });
     }
+  },
+  incrementViews: async (slug) => {
+    const postService = new PostService();
+    await postService.incrementViews(slug);
+    set((state) => ({
+      totalViews: state.totalViews + 1,
+    }));
+  },
+
+  getTotalViews: async () => {
+    const postService = new PostService();
+    const totalViews = await postService.getTotalViews();
+    set({ totalViews });
   },
 }));

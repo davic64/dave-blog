@@ -1,7 +1,7 @@
 "use client";
 import { IconBrandFacebook, IconBrandX, IconLink } from "@tabler/icons-react";
 import { PostHead } from "@/modules/blog/components";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import dayjs from "dayjs";
 
@@ -56,9 +56,56 @@ export const PostContent = ({ post }) => {
         </div>
         <hr className="my-14 opacity-30" />
         <div className="prose dark:prose-invert max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              h1: ({ node, ...props }) => (
+                <h1 className="text-4xl font-bold mb-4" {...props} />
+              ),
+              h2: ({ node, ...props }) => (
+                <h2 className="text-3xl font-bold mb-3" {...props} />
+              ),
+              h3: ({ node, ...props }) => (
+                <h3 className="text-2xl font-bold mb-2" {...props} />
+              ),
+              p: ({ node, ...props }) => (
+                <p className="text-lg mb-4 leading-relaxed" {...props} />
+              ),
+              a: ({ node, ...props }) => (
+                <a className="text-blue-500 hover:underline" {...props} />
+              ),
+              ul: ({ node, ...props }) => (
+                <ul className="list-disc pl-8 mb-4" {...props} />
+              ),
+              ol: ({ node, ...props }) => (
+                <ol className="list-decimal pl-8 mb-4" {...props} />
+              ),
+              li: ({ node, ...props }) => <li className="mb-2" {...props} />,
+              blockquote: ({ node, ...props }) => (
+                <blockquote
+                  className="border-l-4 border-gray-300 pl-4 italic mb-4"
+                  {...props}
+                />
+              ),
+              code: ({ node, ...props }) => (
+                <code
+                  className="bg-gray-100 dark:bg-gray-800 p-1 rounded"
+                  {...props}
+                />
+              ),
+              pre: ({ node, ...props }) => (
+                <pre
+                  className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto"
+                  {...props}
+                />
+              ),
+              img: ({ node, ...props }) => (
+                <img className="max-w-full h-auto mb-4 rounded-lg" {...props} />
+              ),
+            }}
+          >
             {post.content}
-          </ReactMarkdown>
+          </Markdown>
         </div>
       </div>
     </div>

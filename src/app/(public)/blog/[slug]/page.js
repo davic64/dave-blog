@@ -1,6 +1,7 @@
 import { PostContent } from "@/modules/blog/components";
 import { PostService } from "@/modules/blog/services/PostService";
 import { notFound } from "next/navigation";
+import ClientComponentWrapper from "./ClientComponentWrapper";
 
 export default async function PostPage({ params }) {
   if (!params?.slug) return notFound();
@@ -15,11 +16,7 @@ export default async function PostPage({ params }) {
     date: post.date?.seconds ? post.date.seconds * 1000 : new Date().getTime(),
   };
 
-  return (
-    <div className="space-y-6">
-      <PostContent post={serializedPost} />
-    </div>
-  );
+  return <ClientComponentWrapper post={serializedPost} slug={params.slug} />;
 }
 
 export async function generateStaticParams() {

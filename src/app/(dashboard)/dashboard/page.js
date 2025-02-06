@@ -40,7 +40,9 @@ export default function Dashboard() {
               <IconEye size={16} className="text-gray-500" />
               <p className="text-sm text-gray-500">Vistas Totales</p>
             </div>
-            <p className="text-2xl font-bold">100</p>
+            <p className="text-2xl font-bold">
+              {posts.reduce((acc, post) => acc + post.views, 0)}
+            </p>
           </Card>
           <Card className="p-4 space-y-2">
             <div className="flex items-center gap-2">
@@ -116,7 +118,6 @@ export default function Dashboard() {
                     </div>
                     <div className="flex items-center gap-2">
                       <IconEye size={16} className="text-gray-500" />
-                      {/* Falta poner los views de las analíticas */}
                       <p className="text-sm text-gray-500">{post.views}</p>
                     </div>
                   </div>

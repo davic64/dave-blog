@@ -6,6 +6,7 @@ export class Post {
     date = new Date(),
     meta = {},
     image,
+    views = 0,
     status = "draft",
   }) {
     this.id = id;
@@ -21,6 +22,7 @@ export class Post {
       seoDescription: this._generateSEODescription(),
     };
     this.slug = this._generateSlug();
+    this.views = views;
   }
 
   _validate(title, content) {
@@ -49,6 +51,11 @@ export class Post {
       image: this.image,
       status: this.status,
       slug: this.slug,
+      views: this.views,
     };
+  }
+
+  incrementViews() {
+    this.views++;
   }
 }

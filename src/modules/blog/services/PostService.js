@@ -1,5 +1,5 @@
 import { db } from "@/infrastructure/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 
 export class PostService {
   constructor() {
@@ -17,5 +17,18 @@ export class PostService {
     const posts = await getDocs(this.postCollection);
     const post = posts.docs.find((doc) => doc.data().slug === slug);
     return post ? { id: post.id, ...post.data() } : null;
+  }
+
+  async getTotalViews() {
+    const posts = await this.getAllPublished();
+    return posts.reduce((acc, post) => acc + post.views, 0);
+  }
+
+  async incrementViews(slug) {
+    const post = await this.getBySlug(slug);
+    if (post) {
+      post.views++;
+      await updateDoc(doc(this.postCollection, post.id), { views: post.views });
+    }
   }
 }

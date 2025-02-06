@@ -4,7 +4,7 @@ export const useDashboardStore = create((set) => ({
   posts: [],
   loading: false,
   error: null,
-
+  post: null,
   fetchPosts: async () => {
     try {
       set({ loading: true, error: null });
