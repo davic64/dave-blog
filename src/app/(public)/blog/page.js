@@ -4,6 +4,7 @@ import { PostCard, PostList } from "@/modules/blog/components";
 import { IconFileSmileFilled } from "@tabler/icons-react";
 import { useBlogStore } from "@/stores/blogStore";
 import { Spinner } from "@/ui";
+
 export default function BlogPage() {
   const { posts, fetchPosts, loading } = useBlogStore();
 
@@ -17,7 +18,7 @@ export default function BlogPage() {
     </div>
   ) : posts.length > 0 ? (
     <div className="space-y-4 p-32">
-      <PostCard post={posts[0]} main />
+      <PostCard post={posts[0]} main key={posts[0].id} />
       <PostList posts={posts} />
     </div>
   ) : (
