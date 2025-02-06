@@ -1,9 +1,18 @@
 import { db } from "@/infrastructure/firebase";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  increment,
+  runTransaction,
+} from "firebase/firestore";
 
 export class PostService {
   constructor() {
     this.postCollection = collection(db, "posts");
+    this.viewsCollection = collection(db, "views");
   }
 
   async getAllPublished() {
@@ -19,16 +28,44 @@ export class PostService {
     return post ? { id: post.id, ...post.data() } : null;
   }
 
-  async getTotalViews() {
-    const posts = await this.getAllPublished();
-    return posts.reduce((acc, post) => acc + post.views, 0);
-  }
-
   async incrementViews(slug) {
-    const post = await this.getBySlug(slug);
-    if (post) {
-      post.views++;
-      await updateDoc(doc(this.postCollection, post.id), { views: post.views });
+    try {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+
+      const q = query(this.postCollection, where("slug", "==", slug));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) return;
+
+      const post = querySnapshot.docs[0];
+      const postId = post.id;
+
+      const viewsRef = doc(this.viewsCollection, postId);
+      const postRef = doc(this.postCollection, postId);
+
+      await runTransaction(db, async (transaction) => {
+        transaction.set(
+          viewsRef,
+          {
+            slug,
+            year,
+            month,
+            count: increment(1),
+          },
+          { merge: true }
+        );
+
+        transaction.update(postRef, {
+          views: increment(1),
+        });
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Error incrementando vistas:", error);
+      throw error;
     }
   }
 }

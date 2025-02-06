@@ -1,11 +1,11 @@
 "use client";
-import { Button, Input } from "@/ui";
+import { Button, Input, Spinner } from "@/ui";
 import { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { IconUpload } from "@tabler/icons-react";
 import { toast } from "react-hot-toast";
 
-export const PostForm = ({ post, onSubmit }) => {
+export const PostForm = ({ post, onSubmit, loading }) => {
   const [formData, setFormData] = useState({
     title: post?.title || "",
     content: post?.content || "",
@@ -18,6 +18,7 @@ export const PostForm = ({ post, onSubmit }) => {
 
   const handleSubmit = async (e, isDraft = false) => {
     e.preventDefault();
+    console.log(isDraft);
     try {
       const newStatus = isDraft ? "draft" : "published";
 
@@ -45,6 +46,16 @@ export const PostForm = ({ post, onSubmit }) => {
             JSON.stringify(post.meta?.tags || []);
 
         if (!hasChanges) {
+          if (isDraft) {
+            await onSubmit({ ...updatedFields, status: "draft" }, selectedFile);
+            return;
+          } else if (post.status === "draft") {
+            await onSubmit(
+              { ...updatedFields, status: "published" },
+              selectedFile
+            );
+            return;
+          }
           toast.error("No hay cambios para actualizar");
           return;
         }
@@ -117,26 +128,47 @@ export const PostForm = ({ post, onSubmit }) => {
       </div>
       <div className="flex gap-4">
         <Button
-          className="w-full"
+          className="w-full flex items-center justify-center gap-2"
           onClick={(e) => handleSubmit(e, false)}
           borderColor="primary"
           disabled={
             !formData.title ||
             !formData.content ||
             !formData.meta.tags ||
-            (!post && !selectedFile)
+            (!post && !selectedFile) ||
+            loading
           }
         >
-          {post ? "Actualizar" : "Publicar"} artículo
+          {loading ? (
+            <Spinner />
+          ) : post ? (
+            post.status === "published" ? (
+              "Actualizar"
+            ) : (
+              "Publicar"
+            )
+          ) : (
+            "Publicar"
+          )}
         </Button>
         <Button
           variant="warning"
-          className="w-full"
+          className="w-full flex items-center justify-center gap-2"
           type="button"
           borderColor="warning"
           onClick={(e) => handleSubmit(e, true)}
         >
-          {post ? "Guardar borrador" : "Guardar como borrador"}
+          {loading ? (
+            <Spinner />
+          ) : post ? (
+            post.status === "draft" ? (
+              "Guardar borrador"
+            ) : (
+              "Guardar como borrador"
+            )
+          ) : (
+            "Guardar como borrador"
+          )}
         </Button>
       </div>
     </div>

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { IconFile, IconClock } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-
+import { useDashboardStore } from "@/stores/dashboardStore";
 const statusLabels = {
   draft: {
     label: "Borrador",
@@ -20,7 +20,7 @@ const statusLabels = {
 
 export const PostCard = ({ post }) => {
   const router = useRouter();
-
+  const { deletePost } = useDashboardStore();
   return (
     <Card className="w-full h-[16rem] p-0 rounded-3xl relative select-none">
       <img
@@ -55,7 +55,11 @@ export const PostCard = ({ post }) => {
           >
             Editar
           </Button>
-          <Button variant="danger" size="sm">
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => deletePost(post.id)}
+          >
             Eliminar
           </Button>
         </div>

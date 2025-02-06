@@ -35,10 +35,4 @@ export const useBlogStore = create((set) => ({
       totalViews: state.totalViews + 1,
     }));
   },
-
-  getTotalViews: async () => {
-    const postService = new PostService();
-    const totalViews = await postService.getTotalViews();
-    set({ totalViews });
-  },
 }));

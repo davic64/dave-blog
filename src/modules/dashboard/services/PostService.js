@@ -19,10 +19,12 @@ import {
   listAll,
   deleteObject,
 } from "firebase/storage";
+import dayjs from "dayjs";
 
 export class PostService {
   constructor() {
     this.postCollection = collection(db, "posts");
+    this.viewsCollection = collection(db, "views");
   }
 
   async getAll() {
@@ -115,5 +117,44 @@ export class PostService {
     const snapshot = await uploadBytesResumable(storageRef, file);
     const url = await getDownloadURL(snapshot.ref);
     return url;
+  }
+
+  async getViews() {
+    const viewsSnapshot = await getDocs(collection(db, "views"));
+    return viewsSnapshot.docs.map((doc) => doc.data());
+  }
+
+  async getTotalViewsByMonth() {
+    try {
+      const viewsSnapshot = await getDocs(collection(db, "views"));
+
+      if (viewsSnapshot.empty) {
+        return [];
+      }
+
+      // 2. Organizar y sumar las vistas por mes y año
+      const viewsByMonth = {};
+
+      viewsSnapshot.docs.forEach((doc) => {
+        const { year, month, count } = doc.data();
+        const key = `${year}-${month}`;
+
+        if (!viewsByMonth[key]) {
+          viewsByMonth[key] = {
+            name: dayjs(`${year}-${month}-01`).locale("es").format("MMMM YYYY"),
+            views: 0,
+          };
+        }
+
+        viewsByMonth[key].views += count; // Sumar las vistas de ese mes
+      });
+
+      return Object.values(viewsByMonth).sort((a, b) =>
+        dayjs(a.name, "MMMM YYYY").diff(dayjs(b.name, "MMMM YYYY"))
+      );
+    } catch (error) {
+      console.error("Error obteniendo vistas totales por mes:", error);
+      throw error;
+    }
   }
 }

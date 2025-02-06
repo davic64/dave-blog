@@ -54,8 +54,4 @@ export class Post {
       views: this.views,
     };
   }
-
-  incrementViews() {
-    this.views++;
-  }
 }

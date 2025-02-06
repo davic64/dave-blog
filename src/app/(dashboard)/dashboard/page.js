@@ -8,27 +8,16 @@ import { useEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 
-const data = [
-  { name: "Enero", views: 100 },
-  { name: "Febrero", views: 200 },
-  { name: "Marzo", views: 150 },
-  { name: "Abril", views: 250 },
-  { name: "Mayo", views: 300 },
-  { name: "Junio", views: 200 },
-  { name: "Julio", views: 100 },
-  { name: "Agosto", views: 200 },
-  { name: "Septiembre", views: 150 },
-  { name: "Octubre", views: 250 },
-  { name: "Noviembre", views: 300 },
-  { name: "Diciembre", views: 200 },
-];
-
 export default function Dashboard() {
-  const { posts, loading, fetchOnlyFive } = useDashboardStore();
+  const { posts, loading, fetchOnlyFive, fetchViewsByMonth, viewsByMonth } =
+    useDashboardStore();
 
   useEffect(() => {
     fetchOnlyFive();
-  }, [fetchOnlyFive]);
+    fetchViewsByMonth();
+  }, [fetchOnlyFive, fetchViewsByMonth]);
+
+  console.log(viewsByMonth);
 
   return (
     <ProtectedRoute>
@@ -65,28 +54,36 @@ export default function Dashboard() {
         </div>
         <Card className="p-8 space-y-4">
           <p className="text-lg font-bold">Vistas por Mes</p>
-          <AreaChart width={1080} height={300} data={data}>
-            <Area
-              type="monotone"
-              dataKey="views"
-              stroke="#8884d8"
-              fill="#8884d880"
-            />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#111827",
-                color: "#fff",
-                border: "none",
-                borderRadius: "8px",
-                padding: "10px",
-                fontSize: "12px",
-                fontWeight: "bold",
-                textAlign: "center",
-              }}
-            />
-          </AreaChart>
+          {loading ? (
+            <div className="flex justify-center items-center py-8">
+              <Spinner />
+            </div>
+          ) : viewsByMonth.length > 0 ? (
+            <AreaChart width={1080} height={300} data={viewsByMonth}>
+              <Area
+                type="monotone"
+                dataKey="views"
+                stroke="#8884d8"
+                fill="#8884d880"
+              />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#111827",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "8px",
+                  padding: "10px",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              />
+            </AreaChart>
+          ) : (
+            <p className="text-gray-500">No hay datos disponibles</p>
+          )}
         </Card>
         <Card className="px-8 space-y-4">
           <p className="text-lg font-bold">Posts Recientes</p>
