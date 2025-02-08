@@ -31,19 +31,24 @@ export const PostHead = ({ title, date, tags, src }) => {
         priority
         quality={80}
       />
-      <div className="w-full h-full flex flex-col gap-6 items-center justify-center text-center relative z-10 bg-black/40">
+      <div className="w-full h-full flex flex-col gap-4 sm:gap-6 items-center justify-center text-center relative z-10 bg-black/40 px-4">
         <div
           style={{
             opacity: opacity,
             transform: `translateY(${translateY}px)`,
           }}
-          className="flex flex-col gap-6 items-center"
+          className="flex flex-col gap-4 sm:gap-6 items-center w-full max-w-4xl"
         >
-          <p className="text-lg">{date}</p>
-          <h1 className="font-bold text-7xl w-[80rem]">{title}</h1>
-          <div className="font-bold text-xl flex items-center justify-center gap-4">
+          <p className="text-base sm:text-lg">{date}</p>
+          <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl w-full">
+            {title}
+          </h1>
+          <div className="font-bold text-lg sm:text-xl flex flex-wrap items-center justify-center gap-2 sm:gap-4">
             {tags?.map((tag) => (
-              <Button key={tag} className="px-4 py-0.5">
+              <Button
+                key={tag}
+                className="px-3 sm:px-4 py-0.5 text-sm sm:text-base"
+              >
                 {tag}
               </Button>
             ))}

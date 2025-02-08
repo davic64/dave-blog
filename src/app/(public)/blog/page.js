@@ -37,7 +37,7 @@ export default function BlogPage() {
     }
 
     return (
-      <div className="space-y-4 p-32">
+      <div className="space-y-4 px-4 md:px-8 lg:px-16 xl:px-32 py-8">
         <MemoizedPostCard post={posts[0]} main key={posts[0].id} />
         <MemoizedPostList posts={posts} />
       </div>

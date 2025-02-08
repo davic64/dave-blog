@@ -39,7 +39,7 @@ export const PostContent = ({ post }) => {
         title={post.title}
         tags={post.meta.tags}
       />
-      <div className="py-14 px-80">
+      <div className="py-8 px-10 sm:py-12 sm:px-8 md:py-14 md:px-20 lg:px-40 xl:px-80">
         <div className="flex items-center justify-center text-center gap-4">
           <IconBrandFacebook
             className="cursor-pointer"
@@ -54,19 +54,28 @@ export const PostContent = ({ post }) => {
             onClick={() => handleShare("copy")}
           />
         </div>
-        <hr className="my-14 opacity-30" />
+        <hr className="my-8 sm:my-10 md:my-12 lg:my-14 opacity-30" />
         <div className="prose dark:prose-invert max-w-none">
           <Markdown
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ node, ...props }) => (
-                <h1 className="text-4xl font-bold mb-4" {...props} />
+                <h1
+                  className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4"
+                  {...props}
+                />
               ),
               h2: ({ node, ...props }) => (
-                <h2 className="text-3xl font-bold mb-3" {...props} />
+                <h2
+                  className="text-xl sm:text-2xl md:text-3xl font-bold mb-3"
+                  {...props}
+                />
               ),
               h3: ({ node, ...props }) => (
-                <h3 className="text-2xl font-bold mb-2" {...props} />
+                <h3
+                  className="text-lg sm:text-xl md:text-2xl font-bold mb-2"
+                  {...props}
+                />
               ),
               p: ({ node, ...props }) => (
                 <p className="text-lg mb-4 leading-relaxed" {...props} />
@@ -75,10 +84,16 @@ export const PostContent = ({ post }) => {
                 <a className="text-blue-500 hover:underline" {...props} />
               ),
               ul: ({ node, ...props }) => (
-                <ul className="list-disc pl-8 mb-4" {...props} />
+                <ul
+                  className="list-disc pl-4 sm:pl-6 md:pl-8 mb-4"
+                  {...props}
+                />
               ),
               ol: ({ node, ...props }) => (
-                <ol className="list-decimal pl-8 mb-4" {...props} />
+                <ol
+                  className="list-decimal pl-4 sm:pl-6 md:pl-8 mb-4"
+                  {...props}
+                />
               ),
               li: ({ node, ...props }) => <li className="mb-2" {...props} />,
               blockquote: ({ node, ...props }) => (
