@@ -2,15 +2,19 @@ import { Card } from "@/ui";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import Link from "next/link";
+import Image from "next/image";
 
 export const PostCard = ({ post, main = false }) => {
   return !main ? (
     <Link href={`/blog/${post.slug}`}>
       <Card className="w-full h-[30rem] p-0 rounded-3xl relative cursor-pointer">
-        <img
-          className="w-full h-full object-cover absolute top-0 left-0"
+        <Image
           src={post.image}
           alt={post.title}
+          fill
+          className="object-cover"
+          priority={main}
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
         <div className="absolute bottom-0 left-0 w-full h-full bg-black/40 group hover:bg-black/60 transition-all duration-500">
           <div className="absolute bottom-14 left-14 group-hover:bottom-20 transition-all duration-500">
@@ -37,10 +41,13 @@ export const PostCard = ({ post, main = false }) => {
   ) : (
     <Link href={`/blog/${post.slug}`}>
       <Card className="w-full h-[30rem] p-0 rounded-3xl relative cursor-pointer">
-        <img
-          className="w-full h-full object-cover absolute top-0 left-0"
+        <Image
           src={post.image}
           alt={post.title}
+          fill
+          className="object-cover"
+          priority={main}
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
         <div className="absolute bottom-0 left-0 w-full h-full bg-black/40 group hover:bg-black/60 transition-all duration-500">
           <div className="absolute bottom-14 left-14 group-hover:bottom-20 transition-all duration-500">

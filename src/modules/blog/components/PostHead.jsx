@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/ui";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 export const PostHead = ({ title, date, tags, src }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -22,10 +23,13 @@ export const PostHead = ({ title, date, tags, src }) => {
 
   return (
     <div className="relative h-screen w-full">
-      <img
+      <Image
         className="absolute w-full h-full object-cover top-0 left-0"
         src={src}
         alt={title}
+        fill
+        priority
+        quality={80}
       />
       <div className="w-full h-full flex flex-col gap-6 items-center justify-center text-center relative z-10 bg-black/40">
         <div

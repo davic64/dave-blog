@@ -5,6 +5,8 @@ import "dayjs/locale/es";
 import { IconFile, IconClock } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useDashboardStore } from "@/stores/dashboardStore";
+import Image from "next/image";
+
 const statusLabels = {
   draft: {
     label: "Borrador",
@@ -23,10 +25,13 @@ export const PostCard = ({ post }) => {
   const { deletePost } = useDashboardStore();
   return (
     <Card className="w-full h-[16rem] p-0 rounded-3xl relative select-none">
-      <img
+      <Image
         className="w-full h-full object-cover absolute top-0 left-0"
         src={post.image}
         alt={post.title}
+        fill
+        quality={80}
+        priority={post.status === "published"}
       />
       <div className="absolute bottom-0 left-0 w-full h-full bg-black/40 group hover:bg-black/60 transition-all duration-500">
         <div className="absolute top-6 right-6 z-10">

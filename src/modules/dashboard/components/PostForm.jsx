@@ -4,6 +4,7 @@ import { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { IconUpload } from "@tabler/icons-react";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 
 export const PostForm = ({ post, onSubmit, loading }) => {
   const [formData, setFormData] = useState({
@@ -112,19 +113,18 @@ export const PostForm = ({ post, onSubmit, loading }) => {
             }}
           />
         </label>
-        {(formData.image || selectedFile) && (
-          <div className="flex justify-center items-center w-full rounded-lg overflow-hidden mt-4">
-            <img
-              src={
-                selectedFile
-                  ? URL.createObjectURL(selectedFile)
-                  : formData.image
-              }
-              alt="Imagen del post"
-              className="w-full h-54 object-cover"
-            />
-          </div>
-        )}
+        <div className="w-full h-[45rem] relative rounded-lg overflow-hidden mt-4">
+          <Image
+            src={
+              selectedFile ? URL.createObjectURL(selectedFile) : formData.image
+            }
+            alt="Imagen del post"
+            fill
+            className="object-cover"
+            quality={80}
+            unoptimized={!!selectedFile}
+          />
+        </div>
       </div>
       <div className="flex gap-4">
         <Button

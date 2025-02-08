@@ -7,6 +7,7 @@ import { useDashboardStore } from "@/stores/dashboardStore";
 import { useEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
+import Image from "next/image";
 
 export default function Dashboard() {
   const { posts, loading, fetchOnlyFive, fetchViewsByMonth, viewsByMonth } =
@@ -97,11 +98,14 @@ export default function Dashboard() {
                 <div key={post.id}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="w-24 h-16 bg-gray-200 rounded-lg">
-                        <img
+                      <div className="w-24 h-16 bg-gray-200 rounded-lg relative overflow-hidden">
+                        <Image
                           src={post.image}
                           alt={post.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
+                          quality={80}
+                          priority={post.status === "published"}
                         />
                       </div>
                       <div>
