@@ -153,16 +153,18 @@ export const PostForm = ({ post, onSubmit, loading }) => {
             onChange={handleFileChange}
           />
         </label>
-        <div className="w-full h-[45rem] relative rounded-lg overflow-hidden mt-4">
-          <Image
-            src={imageSrc}
-            alt="Imagen del post"
-            fill
-            className="object-cover"
-            quality={80}
-            unoptimized={!!selectedFile}
-          />
-        </div>
+        {imageSrc && (
+          <div className="w-full h-[45rem] relative rounded-lg overflow-hidden mt-4">
+            <Image
+              src={imageSrc}
+              alt="Imagen del post"
+              fill
+              className="object-cover"
+              quality={80}
+              unoptimized={!!selectedFile}
+            />
+          </div>
+        )}
       </div>
       <div className="flex gap-4">
         <Button
