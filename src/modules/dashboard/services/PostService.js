@@ -72,9 +72,20 @@ export class PostService {
   }
 
   async update(post, file) {
-    const updatedPost = new Post(post);
+    // Obtener el post actual primero
     const postRef = doc(this.postCollection, post.id);
+    const currentPost = (await getDoc(postRef)).data();
 
+    // Combinar datos existentes con las actualizaciones
+    const mergedData = {
+      ...currentPost,
+      ...post,
+      date: currentPost.date, // Mantener fecha original
+      views: currentPost.views // Mantener contador de vistas
+    };
+
+    const updatedPost = new Post(mergedData);
+    
     if (file) {
       const url = await this.uploadImage(
         file,

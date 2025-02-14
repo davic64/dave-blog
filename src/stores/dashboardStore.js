@@ -61,7 +61,9 @@ export const useDashboardStore = create((set) => ({
       const updatedPost = await postService.update(post, file);
       set((state) => ({
         posts: state.posts.map((p) =>
-          p.id === updatedPost.id ? updatedPost : p
+          p.id === updatedPost.id 
+            ? { ...p, ...updatedPost }
+            : p
         ),
         loading: false,
       }));
