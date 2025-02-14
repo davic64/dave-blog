@@ -38,17 +38,29 @@ export async function generateMetadata({ params }) {
 
   if (!post) return { title: "Post no encontrado" };
 
+  console.log(post);
+
   const metadata = {
     title: post.meta.title || post.title,
-    description: post.meta.description,
+    description: post.meta.seoDescription,
     keywords: post.meta.tags?.join(", ") || "",
     openGraph: {
       title: post.meta.title || post.title,
-      description: post.meta.description,
+      description: post.meta.seoDescription,
       type: "article",
       publishedTime: post.date?.toDate?.()?.toISOString(),
       tags: post.meta.tags || [],
-      images: post.meta.image || "",
+      images: [
+        {
+          url: post.image || "",
+        }
+      ]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.meta.title || post.title,
+      description: post.meta.seoDescription,
+      images: [post.image || ""],
     },
   };
 
